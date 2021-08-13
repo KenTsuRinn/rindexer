@@ -1,3 +1,4 @@
 # rindexer
+<hr/>
 
-write indexer by rust, just for fun.
+* write indexer by rust, just for fun.
