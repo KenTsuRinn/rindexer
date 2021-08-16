@@ -1,35 +1,23 @@
 use std::fs::File;
-use std::io::{BufRead, BufReader, Lines, Read};
 use std::path::Path;
 use crate::model::iprovider::IProvider;
+use std::io::Read;
 
 pub struct PhysicsFileProvider {
     path: Box<Path>,
-    buffer: Option<String>,
 }
 
 impl PhysicsFileProvider {
-    pub fn new(path: &str) -> PhysicsFileProvider {
+    pub fn new(path: String) -> PhysicsFileProvider {
         if path.is_empty() {
             panic!("invalid path.")
         }
 
         return PhysicsFileProvider {
-            path: Box::from(Path::new(path)),
-            buffer: None,
+            path: Box::from(Path::new(path.as_str())),
         };
     }
 
-    fn create_buffer(&self) -> String {
-        if !self.path.exists() {
-            panic!("file not exists.")
-        }
-
-        let file = File::open(self.path.as_ref()).expect("file not found.");
-        let mut content = String::new();
-        BufReader::new(file).read_to_string(&mut content);
-        return content;
-    }
 }
 
 impl IProvider for PhysicsFileProvider {
